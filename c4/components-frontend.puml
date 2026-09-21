@@ -1,0 +1,20 @@
+@startuml "Components-Bounded Contexts"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title ACME Learning Center - Component Diagram (Bounded Contexts)
+
+System_Ext(learningapi, "Learning Center API", "Stores categories, courses, and user accounts; a json-server fake API in development")
+
+Container_Boundary(spa, "Single Page Application") {
+    Component(learning, "Learning", "Angular", "Manages the categories and courses of the learning catalog")
+    Component(iam, "IAM", "Angular", "Registers users, signs them in and out, and protects routes; a generic subdomain built last")
+    Component(shared, "Shared", "Angular", "BaseEntity, BaseAssembler, BaseApiEndpoint, BaseApi, BaseForm, and cross-cutting presentation: Layout, LanguageSwitcher, FooterContent, Home, About, PageNotFound")
+}
+
+Rel(learning, shared, "Extends BaseApiEndpoint, BaseApi, and BaseForm from, and implements BaseAssembler and BaseEntity from")
+Rel(iam, shared, "Extends BaseApi, ErrorHandlingEnabledBaseType, and BaseForm from, and implements BaseEntity from")
+Rel(shared, iam, "Renders AuthenticationSection from")
+Rel(iam, learning, "Protects the routes of, with iamGuard, and adds the session token to the requests of, with iamInterceptor")
+Rel(learning, learningapi, "Reads and writes categories and courses using [HTTP/JSON]")
+Rel(iam, learningapi, "Signs users up and in using [HTTP/JSON]")
+@enduml
