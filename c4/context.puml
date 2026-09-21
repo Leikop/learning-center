@@ -1,0 +1,12 @@
+@startuml "Context"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title ACME Learning Center - Context Diagram
+
+Person(user, "User", "A learning manager, course organizer, or registered user who manages categories and courses")
+System(learningcenter, "ACME Learning Center", "Lets a user register, sign in, and manage the categories and courses of the learning catalog, in English or Spanish")
+System_Ext(learningapi, "Learning Center API", "Stores categories, courses, and user accounts; a json-server fake API in development")
+
+Rel(user, learningcenter, "Manages categories and courses using [HTTPS]")
+Rel(learningcenter, learningapi, "Reads and writes categories, courses, and sessions using [HTTP/JSON]")
+@enduml
