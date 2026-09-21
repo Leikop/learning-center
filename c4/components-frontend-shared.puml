@@ -1,0 +1,25 @@
+@startuml "Components-Shared"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title ACME Learning Center - Shared Component Diagram (DDD Layers)
+
+Container_Boundary(shared, "Shared Kernel") {
+    Boundary(presentation, "Presentation") {
+        Component(layout, "Layout", "Angular Component", "layout.ts, layout.html, layout.css (hosted by the root App): the toolbar, navigation, and footer every screen lives in")
+        Component(language_switcher, "LanguageSwitcher", "Angular Component", "language-switcher.ts, language-switcher.html, language-switcher.css: toggles English and Spanish")
+        Component(footer_content, "FooterContent", "Angular Component", "footer-content.ts, footer-content.html, footer-content.css: the copyright and attribution notice")
+        Component(base_form, "BaseForm", "Base class", "BaseForm, base-form.ts: tells a form whether a control is invalid and what to say about it")
+        Component(shared_views, "shared/presentation/views", "Angular Components", "Home (home.ts), About (about.ts), PageNotFound (page-not-found.ts): the routed pages that belong to no context")
+    }
+    Boundary(domain, "Domain") {
+        Component(shared_domain_model, "shared/domain/model", "Interface", "BaseEntity (base-entity.ts): the contract every domain entity honors, an id")
+    }
+    Boundary(infrastructure, "Infrastructure") {
+        Component(shared_infrastructure, "shared/infrastructure", "Base classes, Interfaces", "BaseApiEndpoint (base-api-endpoint.ts), BaseApi (base-api.ts), ErrorHandlingEnabledBaseType (error-handling-enabled-base-type.ts), BaseAssembler (base-assembler.ts), BaseResource and BaseResponse (base-response.ts): the generic CRUD, error handling, and mapping every API client reuses")
+    }
+}
+
+Rel(layout, language_switcher, "Renders")
+Rel(layout, footer_content, "Renders")
+Rel(shared_infrastructure, shared_domain_model, "Handles entities through")
+@enduml
