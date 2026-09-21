@@ -1,0 +1,38 @@
+@startuml "Components-Learning"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title ACME Learning Center - Learning Component Diagram (DDD Layers)
+
+System_Ext(learningapi, "Learning Center API", "Stores categories, courses, and user accounts; a json-server fake API in development")
+
+Container_Boundary(learning, "Learning Bounded Context") {
+    Boundary(presentation, "Presentation") {
+        Component(category_list, "CategoryList", "Angular Component", "category-list.ts, category-list.html, category-list.css: lists the categories in a sortable, paginated table")
+        Component(category_form, "CategoryForm", "Angular Component", "category-form.ts, category-form.html, category-form.css: creates or edits one category")
+        Component(course_list, "CourseList", "Angular Component", "course-list.ts, course-list.html, course-list.css: lists the courses, each with its category, in a sortable, paginated table")
+        Component(course_form, "CourseForm", "Angular Component", "course-form.ts, course-form.html, course-form.css: creates or edits one course, with a required category")
+    }
+    Boundary(application, "Application") {
+        Component(learning_store, "LearningStore", "Angular Signals", "LearningStore, learning.store.ts: the categories, the courses, and the loading and error state")
+    }
+    Boundary(domain, "Domain") {
+        Component(learning_domain_model, "learning/domain/model", "Entities", "Category (category.entity.ts), Course (course.entity.ts): what makes a category and a course")
+    }
+    Boundary(infrastructure, "Infrastructure") {
+        Component(learning_infrastructure, "learning/infrastructure", "HTTP, Assemblers, Resources", "LearningApi (learning-api.ts), CategoriesApiEndpoint (categories-api-endpoint.ts), CoursesApiEndpoint (courses-api-endpoint.ts), CategoryAssembler (category-assembler.ts), CourseAssembler (course-assembler.ts), categories-response.ts, courses-response.ts: fetches from the API, the assemblers turn its resources into entities")
+    }
+}
+
+Rel(category_list, learning_store, "Reads the categories from, and asks to delete one through")
+Rel(category_form, learning_store, "Asks to add or update a category through")
+Rel(course_list, learning_store, "Reads the courses from, and asks to delete one through")
+Rel(course_form, learning_store, "Reads the categories from, and asks to add or update a course through")
+Rel(category_list, learning_domain_model, "Displays")
+Rel(course_list, learning_domain_model, "Displays")
+Rel(category_form, learning_domain_model, "Builds")
+Rel(course_form, learning_domain_model, "Builds")
+Rel(learning_store, learning_domain_model, "Holds")
+Rel(learning_store, learning_infrastructure, "Loads and saves categories and courses through")
+Rel(learning_infrastructure, learning_domain_model, "Builds")
+Rel(learning_infrastructure, learningapi, "Reads and writes categories and courses using [HTTP/JSON]")
+@enduml
