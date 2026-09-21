@@ -1,0 +1,15 @@
+@startuml "Containers"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title ACME Learning Center - Container Diagram
+
+Person(user, "User", "A learning manager, course organizer, or registered user who manages categories and courses")
+System_Ext(learningapi, "Learning Center API", "Stores categories, courses, and user accounts; a json-server fake API in development")
+
+System_Boundary(learningcenter, "ACME Learning Center") {
+    Container(spa, "Single Page Application", "Angular, Angular Material", "Lets the user sign in, manage categories and courses, and switch languages, all in the browser")
+}
+
+Rel(user, spa, "Interacts with")
+Rel(spa, learningapi, "Reads and writes categories, courses, and sessions using [HTTP/JSON]")
+@enduml
