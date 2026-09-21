@@ -1,0 +1,35 @@
+@startuml "Components-IAM"
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title ACME Learning Center - IAM Component Diagram (DDD Layers)
+
+System_Ext(learningapi, "Learning Center API", "Stores categories, courses, and user accounts; a json-server fake API in development")
+
+Container_Boundary(iam, "IAM Bounded Context") {
+    Boundary(presentation, "Presentation") {
+        Component(authentication_section, "AuthenticationSection", "Angular Component", "authentication-section.ts, authentication-section.html, authentication-section.css: sign in and sign up buttons, or the user's name and sign out")
+        Component(sign_in_form, "SignInForm", "Angular Component", "sign-in-form.ts, sign-in-form.html, sign-in-form.css: collects the credentials of a registered user")
+        Component(sign_up_form, "SignUpForm", "Angular Component", "sign-up-form.ts, sign-up-form.html, sign-up-form.css: collects the credentials of a new user")
+    }
+    Boundary(application, "Application") {
+        Component(iam_store, "IamStore", "Angular Signals", "IamStore, iam.store.ts: whether a user is signed in, who they are, and the session token")
+    }
+    Boundary(domain, "Domain") {
+        Component(iam_domain_model, "iam/domain/model", "Entity, Commands", "User (user.entity.ts), SignInCommand (sign-in.command.ts), SignUpCommand (sign-up.command.ts): who a user is and the credentials to sign in or up")
+    }
+    Boundary(infrastructure, "Infrastructure") {
+        Component(iam_infrastructure, "iam/infrastructure", "HTTP, Assemblers, Resources, Guard, Interceptor", "IamApi (iam-api.ts), SignInApiEndpoint (sign-in-api-endpoint.ts), SignUpApiEndpoint (sign-up-api-endpoint.ts), SignInAssembler (sign-in-assembler.ts), SignUpAssembler (sign-up-assembler.ts), iamGuard (iam.guard.ts), iamInterceptor (iam.interceptor.ts), sign-in and sign-up requests and responses: talks to the API, guards routes, and adds the session token to requests")
+    }
+}
+
+Rel(authentication_section, iam_store, "Reads the session from, and asks to sign out through")
+Rel(sign_in_form, iam_store, "Asks to sign in through")
+Rel(sign_up_form, iam_store, "Asks to sign up through")
+Rel(sign_in_form, iam_domain_model, "Builds SignInCommand from")
+Rel(sign_up_form, iam_domain_model, "Builds SignUpCommand from")
+Rel(iam_store, iam_domain_model, "Holds")
+Rel(iam_store, iam_infrastructure, "Signs users in and up through")
+Rel(iam_infrastructure, iam_store, "Reads isSignedIn and currentToken from")
+Rel(iam_infrastructure, iam_domain_model, "Maps the commands of")
+Rel(iam_infrastructure, learningapi, "Signs users up and in using [HTTP/JSON]")
+@enduml
