@@ -27,12 +27,16 @@
     "list-title": "Categories",
     "id": "ID",
     "name": "Name",
-    "new": "New Category"
+    "actions": "Actions",
+    "new": "New Category",
+    "edit": "Edit"
   },
   "category": {
     "new-title": "Create New Category",
+    "edit-title": "Edit Category",
     "name": "Name",
     "create": "Create Category",
+    "update": "Update Category",
     "error": {
       "name-required": "Name is required"
     }
