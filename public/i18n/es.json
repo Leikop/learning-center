@@ -13,6 +13,14 @@
     "title": "Bienvenido",
     "content": "Bienvenido a ACME Learning Center."
   },
+  "categories": {
+    "list-title": "Categorías",
+    "id": "ID",
+    "name": "Nombre"
+  },
+  "courses": {
+    "list-title": "Cursos"
+  },
   "page-not-found": {
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
@@ -22,26 +30,5 @@
     "rights": "Todos los derechos reservados.",
     "powered-by": "Desarrollado con",
     "and": "y"
-  },
-  "categories": {
-    "list-title": "Categorías",
-    "id": "ID",
-    "name": "Nombre",
-    "actions": "Acciones",
-    "new": "Nueva Categoría",
-    "edit": "Editar"
-  },
-  "category": {
-    "new-title": "Crear Nueva Categoría",
-    "edit-title": "Editar Categoría",
-    "name": "Nombre",
-    "create": "Crear Categoría",
-    "update": "Actualizar Categoría",
-    "error": {
-      "name-required": "El nombre es obligatorio"
-    }
-  },
-  "courses": {
-    "list-title": "Cursos"
   }
 }
