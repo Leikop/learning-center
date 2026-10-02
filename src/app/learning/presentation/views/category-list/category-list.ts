@@ -6,19 +6,20 @@ import {LearningStore} from '../../../application/learning.store';
 import {MatError} from '@angular/material/form-field';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {TranslatePipe} from '@ngx-translate/core';
+import {MatIcon} from '@angular/material/icon';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 
 @Component({
   selector: 'app-category-list',
-  imports: [MatTableModule, MatButtonModule, MatError, MatProgressSpinner, TranslatePipe, MatPaginator, MatSort, MatSortHeader],
+  imports: [MatTableModule, MatButtonModule, MatError, MatProgressSpinner, TranslatePipe, MatIcon, MatPaginator, MatSort, MatSortHeader],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css'
 })
 export class CategoryList {
   readonly store = inject(LearningStore);
   protected router = inject(Router);
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   readonly sort = viewChild(MatSort);
   readonly paginator = viewChild(MatPaginator);
 
@@ -34,6 +35,10 @@ export class CategoryList {
     }
     return source;
   });
+
+  editCategory(id: number) {
+    this.router.navigate(['learning/categories', id, 'edit']).then();
+  }
 
   navigateToNew() {
     this.router.navigate(['learning/categories/new']).then();
