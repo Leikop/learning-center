@@ -27,12 +27,16 @@
     "list-title": "Categorías",
     "id": "ID",
     "name": "Nombre",
-    "new": "Nueva Categoría"
+    "actions": "Acciones",
+    "new": "Nueva Categoría",
+    "edit": "Editar"
   },
   "category": {
     "new-title": "Crear Nueva Categoría",
+    "edit-title": "Editar Categoría",
     "name": "Nombre",
     "create": "Crear Categoría",
+    "update": "Actualizar Categoría",
     "error": {
       "name-required": "El nombre es obligatorio"
     }
