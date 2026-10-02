@@ -1,5 +1,5 @@
 <div class="container-with-spacing">
-  <h1 class="title">{{ (isEdit ? 'category.edit-title' : 'category.new-title') | translate }}</h1>
+  <h1 class="title">{{ 'category.new-title' | translate }}</h1>
   <form [formGroup]="form" (ngSubmit)="submit()">
     <mat-form-field>
       <mat-label>{{ 'category.name' | translate }}</mat-label>
@@ -9,7 +9,7 @@
       }
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-      {{ (isEdit ? 'category.update' : 'category.create') | translate }}
+      {{ 'category.create' | translate }}
     </button>
   </form>
 </div>
