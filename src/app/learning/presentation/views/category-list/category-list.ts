@@ -40,6 +40,10 @@ export class CategoryList {
     this.router.navigate(['learning/categories', id, 'edit']).then();
   }
 
+  deleteCategory(id: number) {
+    this.store.deleteCategory(id);
+  }
+
   navigateToNew() {
     this.router.navigate(['learning/categories/new']).then();
   }

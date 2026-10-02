@@ -21,6 +21,7 @@
       <th mat-header-cell *matHeaderCellDef> {{ 'categories.actions' | translate }}</th>
       <td mat-cell *matCellDef="let category">
         <button mat-icon-button aria-label="{{ 'categories.edit' | translate }}" (click)="editCategory(category.id)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button aria-label="{{ 'categories.delete' | translate }}" (click)="deleteCategory(category.id)"><mat-icon>delete</mat-icon></button>
       </td>
     </ng-container>
 
