@@ -57,6 +57,21 @@ export class LearningStore {
     });
   }
 
+  deleteCategory(id: number): void {
+    this.#loadingSignal.set(true);
+    this.#errorSignal.set(null);
+    this.#learningApi.deleteCategory(id).pipe(retry(2)).subscribe({
+      next: () => {
+        this.#categoriesSignal.update(categories => categories.filter(c => c.id !== id));
+        this.#loadingSignal.set(false);
+      },
+      error: err => {
+        this.#errorSignal.set(this.#formatError(err, 'Failed to delete category'));
+        this.#loadingSignal.set(false);
+      }
+    });
+  }
+
   #loadCategories(): void {
     this.#loadingSignal.set(true);
     this.#errorSignal.set(null);
