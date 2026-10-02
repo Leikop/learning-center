@@ -2,6 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {Category} from '../domain/model/category.entity';
 import {LearningApi} from '../infrastructure/learning-api';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {retry} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,21 @@ export class LearningStore {
 
   constructor() {
     this.#loadCategories();
+  }
+
+  addCategory(category: Category): void {
+    this.#loadingSignal.set(true);
+    this.#errorSignal.set(null);
+    this.#learningApi.createCategory(category).pipe(retry(2)).subscribe({
+      next: createdCategory => {
+        this.#categoriesSignal.update(categories => [...categories, createdCategory]);
+        this.#loadingSignal.set(false);
+      },
+      error: err => {
+        this.#errorSignal.set(this.#formatError(err, 'Failed to create category'));
+        this.#loadingSignal.set(false);
+      }
+    });
   }
 
   #loadCategories(): void {
