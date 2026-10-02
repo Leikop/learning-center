@@ -1,4 +1,4 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {Category} from '../domain/model/category.entity';
 import {LearningApi} from '../infrastructure/learning-api';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -19,6 +19,10 @@ export class LearningStore {
 
   constructor() {
     this.#loadCategories();
+  }
+
+  getCategoryById(id: number): Signal<Category | undefined> {
+    return computed(() => id ? this.categories().find(c => c.id === id) : undefined);
   }
 
   addCategory(category: Category): void {
