@@ -7,5 +7,6 @@ const categoryForm = () => import('./views/category-form/category-form').then(m 
 export const learningRoutes: Routes = [
   { path: 'categories',           loadComponent: categoryList },
   { path: 'categories/new',       loadComponent: categoryForm },
+  { path: 'categories/:id/edit',  loadComponent: categoryForm },
   { path: 'courses',              loadComponent: courseList }
 ];
