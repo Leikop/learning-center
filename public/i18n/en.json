@@ -13,12 +13,6 @@
     "title": "Welcome",
     "content": "Welcome to ACME Learning Center."
   },
-  "categories": {
-    "list-title": "Categories"
-  },
-  "courses": {
-    "list-title": "Courses"
-  },
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{ invalid_path }}</strong> is not valid.",
@@ -28,5 +22,26 @@
     "rights": "All rights reserved.",
     "powered-by": "Powered by",
     "and": "and"
+  },
+  "categories": {
+    "list-title": "Categories",
+    "id": "ID",
+    "name": "Name",
+    "actions": "Actions",
+    "new": "New Category",
+    "edit": "Edit"
+  },
+  "category": {
+    "new-title": "Create New Category",
+    "edit-title": "Edit Category",
+    "name": "Name",
+    "create": "Create Category",
+    "update": "Update Category",
+    "error": {
+      "name-required": "Name is required"
+    }
+  },
+  "courses": {
+    "list-title": "Courses"
   }
 }
