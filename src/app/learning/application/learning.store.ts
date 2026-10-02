@@ -40,6 +40,23 @@ export class LearningStore {
     });
   }
 
+  updateCategory(updatedCategory: Category): void {
+    this.#loadingSignal.set(true);
+    this.#errorSignal.set(null);
+    this.#learningApi.updateCategory(updatedCategory).pipe(retry(2)).subscribe({
+      next: category => {
+        this.#categoriesSignal.update(categories =>
+          categories.map(c => c.id === category.id ? category : c)
+        );
+        this.#loadingSignal.set(false);
+      },
+      error: err => {
+        this.#errorSignal.set(this.#formatError(err, 'Failed to update category'));
+        this.#loadingSignal.set(false);
+      }
+    });
+  }
+
   #loadCategories(): void {
     this.#loadingSignal.set(true);
     this.#errorSignal.set(null);
